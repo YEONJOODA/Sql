@@ -134,3 +134,100 @@ SELECT * FROM `Book` ORDER BY `price` DESC LIMIT 3;
 SELECT * FROM `Book` ORDER BY `price` ASC LIMIT 3;
 
 #문제 29
+SELECT SUM(`saleprice`) AS `총판매액` FROM `Orders`;
+
+#문제 30
+SELECT 
+  SUM(`saleprice`) AS `총판매액`,
+  AVG(`saleprice`) AS `평균값`,
+  MIN(`saleprice`) AS `최저가`,
+  MAX(`saleprice`) AS `최고가`
+FROM 
+  `Orders`;
+
+#문제 31
+SELECT COUNT(*) AS `판매건수` FROM `Orders`;
+
+#문제 32
+SELECT `bookid`, 
+       REPLACE(`bookname`, '야구', '농구') AS `bookname`,
+       `publisher`,
+       `price`
+FROM `Book`;
+
+#문제 33
+SELECT `custid`, COUNT(`orderid`) AS `수량` FROM `Orders` 
+WHERE `saleprice` >= 8000
+GROUP BY `custid`
+HAVING `수량` >= 2;
+
+#문제 34
+SELECT * FROM `Customer` AS a
+JOIN `Orders` AS b
+ON a.custid = b.custid
+ORDER BY a.`custid`;
+
+SELECT * FROM `Customer`
+JOIN `Orders`
+USING (`custid`);
+
+SELECT * FROM `Customer` AS a, `Orders` AS b WHERE a.custid = b.custid;
+
+#문제 35
+SELECT * FROM `Customer` AS a
+JOIN `Orders` AS b
+ON a.custid = b.custid
+ORDER BY a.`custid`;
+
+#문제 36
+SELECT `name`, `saleprice` FROM `Customer` AS a
+JOIN `Orders` AS b
+ON a.custid = b.custid
+ORDER BY a.`custid`;
+
+#문제 37
+SELECT `name`, SUM(`saleprice`) FROM `Orders` AS a
+JOIN `Customer` AS b
+ON a.custid = b.custid
+GROUP BY a.`custid`
+ORDER BY `name`;
+
+#문제 38
+SELECT `name`, `bookname` FROM `customer` AS a
+JOIN `Orders` AS b ON a.custid = b.custid
+JOIN `Book` AS c ON b.bookid = c.bookid;
+
+#문제 39
+SELECT `name`, `bookname` FROM `customer` AS a
+JOIN `Orders` AS b ON a.custid = b.custid
+JOIN `Book` AS c ON b.bookid = c.bookid
+WHERE `price` = 20000;
+
+#문제 40
+SELECT `name`, `saleprice` FROM `Orders` AS a
+RIGHT JOIN `Customer` AS b
+ON a.custid = b.custid;
+
+#문제 41
+SELECT * FROM `book` WHERE `price` = (SELECT MAX(`price`) FROM `Book`);
+
+#문제 42
+SELECT `name` FROM `Customer`
+LEFT JOIN `Orders`
+USING(`custid`)
+WHERE `orderid` IS NULL;
+
+#문제 43
+SELECT SUM(`saleprice`) AS `총매출` FROM `Customer` AS a
+JOIN `Orders` AS b
+ON a.custid = b.custid
+WHERE `name`='김연아';
+
+#문제 44
+INSERT INTO `Book` (`bookid`, `bookname`, `publisher`) VALUES (11, '스포츠의학', '한솔의학서적');
+
+#문제 45
+UPDATE `Customer` SET `address`='대한민국 부산' WHERE `custid`=5;
+
+#문제 46
+DELETE FROM `Customer` WHERE `custid`=5;
